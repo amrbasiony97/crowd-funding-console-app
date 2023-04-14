@@ -1,18 +1,1 @@
-[
-	{
-		"id": 1,
-		"first_name": "Amr",
-		"last_name": "Mohamed",
-		"email": "amrbasiony97@gmail.com",
-		"password": "Abcd@1234",
-		"phone": "01013254679"
-	},
-	{
-		"id": 2,
-		"first_name": "Ahmed",
-		"last_name": "Ali",
-		"email": "ahmedali@gmail.com",
-		"password": "Abcd@1234",
-		"phone": "01547892692"
-	}
-]
+[{"id": 1, "first_name": "Amr", "last_name": "Basiony", "email": "amrbasiony97@gmail.com", "password": "$2b$12$CUcVrz6j9/oFW.0q8nNymuO7W63aYFJLyJQ2kiM4dfVMvtFXH6IDO", "phone": "01013254679"}, {"id": 2, "first_name": "Peter", "last_name": "Salah", "email": "peter_salah@gmail.com", "password": "$2b$12$my21w4VecIix.RLdWFvB.uL0M9zyg79CzBf4bOKU9KE6z5E/3iElC", "phone": "01054692062"}]

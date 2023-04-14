@@ -1,5 +1,5 @@
 from getpass import getpass
-import json, os, re
+import json, os, re, bcrypt
 from dashboard import enter_dashboard
 
 users_file = "users.json"
@@ -30,7 +30,10 @@ def login():
     with open(users_file, "r") as f:
         users_db = json.load(f)
     for db_user in users_db:
-        if db_user["email"] == email and db_user["password"] == password:
+        if db_user["email"] == email and bcrypt.checkpw(
+            password.encode('utf-8'),
+            db_user['password'].encode('utf-8')
+        ):
             enter_dashboard(db_user)
 
 def register():
@@ -82,6 +85,9 @@ def register():
             password_not_match = False
         else:
             print("Password not matched")
+    tmp_hash = bcrypt.hashpw(bytes(password, 'utf-8'), bcrypt.gensalt())
+    password = tmp_hash.decode('utf-8')
+
     phone = get_input(
         "^(010|011|012|015)\d{8}$",
         "phone number"
