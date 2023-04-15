@@ -1,1 +1,18 @@
-[{"id": 1, "first_name": "Amr", "last_name": "Basiony", "email": "amrbasiony97@gmail.com", "password": "$2b$12$CUcVrz6j9/oFW.0q8nNymuO7W63aYFJLyJQ2kiM4dfVMvtFXH6IDO", "phone": "01013254679"}, {"id": 2, "first_name": "Peter", "last_name": "Salah", "email": "peter_salah@gmail.com", "password": "$2b$12$my21w4VecIix.RLdWFvB.uL0M9zyg79CzBf4bOKU9KE6z5E/3iElC", "phone": "01054692062"}]
+[
+	{
+		"id": 1,
+		"first_name": "Amr",
+		"last_name": "Basiony",
+		"email": "amrbasiony97@gmail.com",
+		"password": "$2b$12$JbdKe1xQqL7ZKjRxZkkdSeMpUL1./v2c.3B3qqQajteUOJq//pYXW",
+		"phone": "01013254679"
+	},
+	{
+		"id": 2,
+		"first_name": "John",
+		"last_name": "Doe",
+		"email": "john_doe@gmail.com",
+		"password": "$2b$12$FMgCCv.Dfg3aItRkRWqX/.PIA3sViMQG2BBhWBF2nARpGPZ9IggGy",
+		"phone": "01053659360"
+	}
+]
