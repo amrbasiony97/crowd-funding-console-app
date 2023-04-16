@@ -1,22 +1,16 @@
-import auth
 from menus import print_main_menu
+import options
 
 print("<<< Crowd-Funding App >>>\n")
-options = {
-    1: auth.login,
-    2: auth.register,
-    3: print_main_menu,
-    4: exit
-}
-
 print_main_menu()
+
 while True:
     choice = input("\nmain> ")
     try:
         if(choice.isdigit()):
             choice = int(choice)
-            if choice in options:
-                options[choice]()
+            if choice in options.menu_options:
+                options.menu_options[choice]()
             else:
                 raise Exception("Enter a number from the list")
         else:

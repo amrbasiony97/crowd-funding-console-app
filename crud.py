@@ -1,22 +1,63 @@
-from getpass import getpass
-import json, os, re, bcrypt
-from dashboard import enter_dashboard
+import json, os, re
+from prettytable import PrettyTable
 
-users_file = "users.json"
-if not os.path.exists(users_file):
-    with open(users_file, "w") as f:
-        json.dump([], f)
-
+projects_file = "projects.json"
 counter_file = "counter.json"
-if not os.path.exists(counter_file):
-    with open(counter_file, "w") as f:
-        json.dump([{}], f)
 
 prompt = ""
 
-def login():
+def view_all_projects():
+    with open(projects_file, 'r') as f:
+        projects_db = json.load(f)
+    with open("users.json", 'r') as f:
+        users_db = json.load(f)
+    
+    table = PrettyTable()
+    table.align = "l"
+    table.field_names = ["Id", "Title", "Details", "Target (EGP)", "Start date", "End date", "Owner"]
+    for project in projects_db:
+        for user in users_db:
+            if project['user_id'] == user['id']:
+                user_name = f"{user['first_name']} {user['last_name']}"
+                break
+
+        table.add_row([
+            project['id'], 
+            project['title'], 
+            project['details'], 
+            project['total_target'], 
+            project['start_date'], 
+            project['end_date'],
+            user_name
+        ])
+    print("\nAll Projects")
+    print(table)
+
+def view_my_projects():
+    with open(projects_file, 'r') as f:
+        projects_db = json.load(f)
+    with open("login.json", 'r') as f:
+        login_user = json.load(f)
+    
+    table = PrettyTable()
+    table.align = "l"
+    table.field_names = ["Id", "Title", "Details", "Target (EGP)", "Start date", "End date"]
+    for project in projects_db:
+        if project['user_id'] == login_user['id']:
+            table.add_row([
+                project['id'], 
+                project['title'], 
+                project['details'], 
+                project['total_target'], 
+                project['start_date'], 
+                project['end_date']
+            ])
+    print("\nMy Projects")
+    print(table)
+
+def create_project():
     global prompt
-    prompt = "login"
+    prompt = "create-project"
     print(f"<<< {prompt} >>>")
     email = get_input(
         "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
@@ -28,16 +69,12 @@ def login():
     )
     with open(users_file, "r") as f:
         users_db = json.load(f)
-    login_failed = True
     for db_user in users_db:
         if db_user["email"] == email and bcrypt.checkpw(
             password.encode('utf-8'),
             db_user['password'].encode('utf-8')
         ):
-            login_failed = False
             enter_dashboard(db_user)
-    if login_failed:
-        print("Invalid credentials")
 
 def register():
     global prompt
@@ -119,20 +156,6 @@ def get_input(rgx, field):
         try:
             print(f"\nEnter {field}")
             data = input(f"{prompt}> ")
-            pattern = re.compile(rgx)
-            valid_input = pattern.fullmatch(data)
-            if not valid_input:
-                raise Exception(f"Invalid {field}")
-        except Exception as e:
-            print(e)
-    return data
-
-def get_password(rgx, field):
-    valid_input = False
-    while not valid_input:
-        try:
-            print(f"\nEnter {field}")
-            data = getpass(f"{prompt}> ")
             pattern = re.compile(rgx)
             valid_input = pattern.fullmatch(data)
             if not valid_input:
