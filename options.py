@@ -15,7 +15,7 @@ dashboard_options = {
     1: crud.create_project,
     2: crud.view_all_projects,
     3: crud.view_my_projects,
-    4: 'exit',
+    4: crud.edit_project,
     5: 'exit',
     6: 'exit',
     7: menus.print_dashboard_menu,
