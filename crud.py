@@ -1,16 +1,26 @@
-import json, os, re
+import json, os, re, datetime
 from prettytable import PrettyTable
 
 projects_file = "projects.json"
-counter_file = "counter.json"
+if not os.path.exists(projects_file):
+    with open(projects_file, "w") as f:
+        json.dump([], f)
 
+counter_file = "counter.json"
+users_file = "users.json"
+login_file = "login.json"
 prompt = ""
 
+with open(counter_file, 'r') as f:
+    counter_db = json.load(f)
+with open(users_file, 'r') as f:
+    users_db = json.load(f)
+with open(projects_file, 'r') as f:
+    projects_db = json.load(f)
+
 def view_all_projects():
-    with open(projects_file, 'r') as f:
-        projects_db = json.load(f)
-    with open("users.json", 'r') as f:
-        users_db = json.load(f)
+    global projects_db
+    global users_db
     
     table = PrettyTable()
     table.align = "l"
@@ -34,9 +44,9 @@ def view_all_projects():
     print(table)
 
 def view_my_projects():
-    with open(projects_file, 'r') as f:
-        projects_db = json.load(f)
-    with open("login.json", 'r') as f:
+    global projects_db
+    global login_user
+    with open(login_file, 'r') as f:
         login_user = json.load(f)
     
     table = PrettyTable()
@@ -56,97 +66,56 @@ def view_my_projects():
     print(table)
 
 def create_project():
+    global counter_db
+    global login_db
+    global projects_db
     global prompt
     prompt = "create-project"
-    print(f"<<< {prompt} >>>")
-    email = get_input(
-        "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        "email"
-    )
-    password = get_password(
-        "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-        "password"
-    )
-    with open(users_file, "r") as f:
-        users_db = json.load(f)
-    for db_user in users_db:
-        if db_user["email"] == email and bcrypt.checkpw(
-            password.encode('utf-8'),
-            db_user['password'].encode('utf-8')
-        ):
-            enter_dashboard(db_user)
 
-def register():
-    global prompt
-    global users_file
-    prompt = "register"
-    with open(users_file, 'r') as f:
-        users_db = json.load(f)
-    with open(counter_file, 'r') as f:
-        counter_db = json.load(f)
+    with open(login_file, 'r') as f:
+        login_user = json.load(f)
 
-    if "users" not in counter_db[0]:
-        counter_db[0]["users"] = 0
+    if "projects" not in counter_db[0]:
+        counter_db[0]["projects"] = 0
 
-    print(f"<<< {prompt} >>>")
-    first_name = get_input(
-        "^[a-zA-Z]+$",
-        "first name"
-    )
-    last_name = get_input(
-        "^[a-zA-Z]+$",
-        "last name"
-    )
-    duplicate_email = True
-    while duplicate_email:
-        duplicate_email = False
-        email = get_input(
-            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-            "email"
-        )
-        for db_email in users_db:
-            if email == db_email:
-                duplicate_email = True
-                break
-        if duplicate_email:
-            print("Email already exists")
+    print(f"\nEnter title")
+    title = input(f"{prompt}> ")
+
+    print(f"\nEnter details")
+    details = input(f"{prompt}> ")
+
+    total_target = int(get_input(
+        "^\d*$",
+        "total target in EGP"
+    ))
+
+    valid_date = False
+    while not valid_date:
+        print(f"\nEnter start date as following: 'YYYY-MM-DD'")
+        start_date = input(f"{prompt}> ")
+        valid_date = validate_date(start_date)
+
+    valid_date = False
+    while not valid_date:
+        print(f"\nEnter end date as following: 'YYYY-MM-DD'")
+        end_date = input(f"{prompt}> ")
+        valid_date = validate_date(end_date)
     
-    password_not_match = True
-    while password_not_match:
-        password = get_password(
-            "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-            "password"
-        )
-        confirm_password = get_password(
-            "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-            "password again"
-        )
-        if password == confirm_password:
-            password_not_match = False
-        else:
-            print("Password not matched")
-    tmp_hash = bcrypt.hashpw(bytes(password, 'utf-8'), bcrypt.gensalt())
-    password = tmp_hash.decode('utf-8')
+    counter_db[0]["projects"] += 1
 
-    phone = get_input(
-        "^(010|011|012|015)\d{8}$",
-        "phone number"
-    )
-
-    counter_db[0]["users"] += 1
-
-    new_user = {
-        "id": counter_db[0]["users"],
-        "first_name": first_name,
-        "last_name": last_name,
-        "email": email,
-        "password": password,
-        "phone": phone
+    new_project = {
+        "id": counter_db[0]["projects"],
+        "title": title,
+        "details": details,
+        "total_target": total_target,
+        "start_date": start_date,
+        "end_date": end_date,
+        "user_id": login_user['id']
     }
     
-    users_db.append(new_user)
-    with open(users_file, "w") as f:
-        json.dump(users_db, f)
+    projects_db.append(new_project)
+    with open(projects_file, "w") as f:
+        json.dump(projects_db, f)
     with open(counter_file, "w") as f:
         json.dump(counter_db, f)
 
@@ -163,3 +132,11 @@ def get_input(rgx, field):
         except Exception as e:
             print(e)
     return data
+
+def validate_date(date_text):
+        try:
+            datetime.date.fromisoformat(date_text)
+        except ValueError:
+            print("Incorrect date format, range")
+            return False
+        return True

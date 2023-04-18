@@ -12,7 +12,7 @@ menu_options = {
 }
 
 dashboard_options = {
-    1: 'auth.login',
+    1: crud.create_project,
     2: crud.view_all_projects,
     3: crud.view_my_projects,
     4: 'exit',

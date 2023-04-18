@@ -1,38 +1,29 @@
 [
-    {
-        "id": 1,
-        "title": "Title 1",
-        "details": "Description 1",
-        "total_target": 250000,
-        "start_date": "2023-04-20",
-        "end_date": "2023-05-20",
-        "user_id": 1
-    },
-    {
-        "id": 2,
-        "title": "Title 2",
-        "details": "Description 2",
-        "total_target": 500000,
-        "start_date": "2023-04-20",
-        "end_date": "2023-05-20",
-        "user_id": 2
-    },
-    {
-        "id": 3,
-        "title": "Title 3",
-        "details": "Description 3",
-        "total_target": 1000000,
-        "start_date": "2023-04-20",
-        "end_date": "2023-05-20",
-        "user_id": 1
-    },
-    {
-        "id": 4,
-        "title": "Title 4",
-        "details": "Description 4",
-        "total_target": 750000,
-        "start_date": "2023-04-20",
-        "end_date": "2023-05-20",
-        "user_id": 2
-    }
+	{
+		"id": 1,
+		"title": "Title 1",
+		"details": "Details 1",
+		"total_target": 250000,
+		"start_date": "2022-08-20",
+		"end_date": "2023-06-30",
+		"user_id": 1
+	},
+	{
+		"id": 2,
+		"title": "Title 2",
+		"details": "Details 2",
+		"total_target": 500000,
+		"start_date": "2021-01-01",
+		"end_date": "2023-01-01",
+		"user_id": 1
+	},
+	{
+		"id": 3,
+		"title": "Title 3",
+		"details": "Details 3",
+		"total_target": 1000000,
+		"start_date": "2022-07-10",
+		"end_date": "2024-03-04",
+		"user_id": 2
+	}
 ]

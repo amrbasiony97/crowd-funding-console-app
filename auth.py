@@ -17,7 +17,6 @@ prompt = ""
 def login():
     global prompt
     prompt = "login"
-    print(f"<<< {prompt} >>>")
     email = get_input(
         "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
         "email"
@@ -51,7 +50,6 @@ def register():
     if "users" not in counter_db[0]:
         counter_db[0]["users"] = 0
 
-    print(f"<<< {prompt} >>>")
     first_name = get_input(
         "^[a-zA-Z]+$",
         "first name"
