@@ -18,6 +18,6 @@ dashboard_options = {
     4: 'exit',
     5: 'exit',
     6: 'exit',
-    7: 'exit',
+    7: menus.print_dashboard_menu,
     8: __pass__
 }

@@ -14,5 +14,21 @@
 		"email": "john_doe@gmail.com",
 		"password": "$2b$12$FMgCCv.Dfg3aItRkRWqX/.PIA3sViMQG2BBhWBF2nARpGPZ9IggGy",
 		"phone": "01053659360"
+	},
+	{
+		"id": 3,
+		"first_name": "Mohamed",
+		"last_name": "Ali",
+		"email": "mohamed_ali@gmail.com",
+		"password": "$2b$12$QfMERQolqdvcj72kEp3sBesJu.z2kjUxMin1MUVhOGn30LBY.803K",
+		"phone": "01265836892"
+	},
+	{
+		"id": 4,
+		"first_name": "Ahmed",
+		"last_name": "Hassan",
+		"email": "ahmed_hassan@gmail.com",
+		"password": "$2b$12$knscqsf5Y.1fTglAUNekMuSxGp5QbE6ZNaTovPDBSF5/zLbP7oEay",
+		"phone": "01149260392"
 	}
 ]
